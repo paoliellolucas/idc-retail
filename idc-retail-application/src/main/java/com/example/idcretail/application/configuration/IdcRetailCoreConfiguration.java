@@ -8,14 +8,18 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.example.idcretail.core.cliente.ClienteService;
 import com.example.idcretail.core.cliente.DefaultClienteService;
+import com.example.idcretail.core.especie.DefaultEspecieService;
+import com.example.idcretail.core.especie.EspecieService;
 import com.example.idcretail.core.perfil.DefaultPerfilService;
 import com.example.idcretail.core.perfil.PerfilService;
 import com.example.idcretail.core.tipoactivo.DefaultTipoActivoService;
 import com.example.idcretail.core.tipoactivo.TipoActivoService;
 import com.example.idcretail.provider.ClienteDB;
+import com.example.idcretail.provider.EspecieDB;
 import com.example.idcretail.provider.PerfilDB;
 import com.example.idcretail.provider.TipoActivoDB;
 import com.example.idcretail.provider.repository.ClienteRepository;
+import com.example.idcretail.provider.repository.EspecieRepository;
 import com.example.idcretail.provider.repository.PerfilRepository;
 import com.example.idcretail.provider.repository.TipoActivoRepository;
 
@@ -33,6 +37,9 @@ public class IdcRetailCoreConfiguration {
 	@Autowired
 	TipoActivoRepository tipoActivoRepository;
 	
+	@Autowired
+	EspecieRepository especieRepository;
+	
 	@Bean
 	public ClienteService clienteService() {
 		return new DefaultClienteService(new ClienteDB(clienteRepository));
@@ -47,4 +54,11 @@ public class IdcRetailCoreConfiguration {
 	public TipoActivoService tipoActivoService() {
 		return new DefaultTipoActivoService(new TipoActivoDB(tipoActivoRepository));
 	}
+	
+	@Bean
+	public EspecieService especieService() {
+		return new DefaultEspecieService(new EspecieDB(especieRepository));
+	}
+	
+	
 }
