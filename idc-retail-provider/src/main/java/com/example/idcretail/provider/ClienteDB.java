@@ -1,5 +1,8 @@
 package com.example.idcretail.provider;
 
+import java.util.Optional;
+
+import com.example.idcretail.core.ResourceNotFoundException;
 import com.example.idcretail.core.cliente.Cliente;
 import com.example.idcretail.core.cliente.ClienteGateway;
 import com.example.idcretail.provider.entity.ClienteEntity;
@@ -15,8 +18,9 @@ public class ClienteDB implements ClienteGateway {
 	
 	@Override
 	public Cliente findByCuitCuil(String cuitCuil) {
-		ClienteEntity cliente = clienteRepository.findByCuitCuil(cuitCuil); 
-		return entityToDomain(cliente);
+		Optional<ClienteEntity> cliente = clienteRepository.findByCuitCuil(cuitCuil); 
+		return cliente.map(this::entityToDomain)
+				.orElseThrow(() -> new ResourceNotFoundException("Cuit Cuil Not Found"));
 	}
 	
 	private Cliente entityToDomain(ClienteEntity entity) {

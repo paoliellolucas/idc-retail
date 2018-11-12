@@ -22,7 +22,7 @@ public class EspecieDB implements EspecieGateway {
 	public List<Especie> findByPerfil(Long perfilId) {
 
 		return especieRepository.findByPerfilPerfilId(perfilId).stream()
-				.map(this::convertEntityToDomain)
+				.map(EspecieDB::convertEntityToDomain)
 				.collect(Collectors.toList());
 	}
 	
@@ -30,7 +30,7 @@ public class EspecieDB implements EspecieGateway {
 	public List<Especie> findByTipoActivo(Long tipoActivoId) {
 		
 		return especieRepository.findByTipoActivoTipoActivoId(tipoActivoId).stream()
-				.map(this::convertEntityToDomain)
+				.map(EspecieDB::convertEntityToDomain)
 				.collect(Collectors.toList());
 	}
 	
@@ -38,11 +38,11 @@ public class EspecieDB implements EspecieGateway {
 	public List<Especie> findByTipoActivoAndPerfil(Long tipoActivoId, Long perfilId) {
 		
 		return especieRepository.findByTipoActivoTipoActivoIdAndPerfilPerfilId(tipoActivoId, perfilId).stream()
-				.map(this::convertEntityToDomain)
+				.map(EspecieDB::convertEntityToDomain)
 				.collect(Collectors.toList());
 	}
 	
-	private Especie convertEntityToDomain(EspecieEntity entity) {
+	static Especie convertEntityToDomain(EspecieEntity entity) {
 		PerfilEntity perfil = entity.getPerfil();
 		TipoActivoEntity tipoActivo = entity.getTipoActivo();
 		

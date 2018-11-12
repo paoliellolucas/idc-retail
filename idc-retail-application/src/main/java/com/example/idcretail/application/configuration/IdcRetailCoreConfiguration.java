@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.example.idcretail.core.cartera.CarteraService;
+import com.example.idcretail.core.cartera.DefaultCarteraService;
 import com.example.idcretail.core.cliente.ClienteService;
 import com.example.idcretail.core.cliente.DefaultClienteService;
 import com.example.idcretail.core.especie.DefaultEspecieService;
@@ -14,10 +16,12 @@ import com.example.idcretail.core.perfil.DefaultPerfilService;
 import com.example.idcretail.core.perfil.PerfilService;
 import com.example.idcretail.core.tipoactivo.DefaultTipoActivoService;
 import com.example.idcretail.core.tipoactivo.TipoActivoService;
+import com.example.idcretail.provider.CarteraDB;
 import com.example.idcretail.provider.ClienteDB;
 import com.example.idcretail.provider.EspecieDB;
 import com.example.idcretail.provider.PerfilDB;
 import com.example.idcretail.provider.TipoActivoDB;
+import com.example.idcretail.provider.repository.CarteraRepository;
 import com.example.idcretail.provider.repository.ClienteRepository;
 import com.example.idcretail.provider.repository.EspecieRepository;
 import com.example.idcretail.provider.repository.PerfilRepository;
@@ -40,6 +44,9 @@ public class IdcRetailCoreConfiguration {
 	@Autowired
 	EspecieRepository especieRepository;
 	
+	@Autowired
+	CarteraRepository carteraRepository;
+	
 	@Bean
 	public ClienteService clienteService() {
 		return new DefaultClienteService(new ClienteDB(clienteRepository));
@@ -60,5 +67,9 @@ public class IdcRetailCoreConfiguration {
 		return new DefaultEspecieService(new EspecieDB(especieRepository));
 	}
 	
+	@Bean
+	public CarteraService carteraService() {
+		return new DefaultCarteraService(new CarteraDB(carteraRepository));
+	}
 	
 }
