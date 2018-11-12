@@ -12,6 +12,8 @@ import com.example.idcretail.core.cliente.ClienteService;
 import com.example.idcretail.core.cliente.DefaultClienteService;
 import com.example.idcretail.core.especie.DefaultEspecieService;
 import com.example.idcretail.core.especie.EspecieService;
+import com.example.idcretail.core.orden.DefaultOrdenService;
+import com.example.idcretail.core.orden.OrdenService;
 import com.example.idcretail.core.perfil.DefaultPerfilService;
 import com.example.idcretail.core.perfil.PerfilService;
 import com.example.idcretail.core.tipoactivo.DefaultTipoActivoService;
@@ -19,11 +21,13 @@ import com.example.idcretail.core.tipoactivo.TipoActivoService;
 import com.example.idcretail.provider.CarteraDB;
 import com.example.idcretail.provider.ClienteDB;
 import com.example.idcretail.provider.EspecieDB;
+import com.example.idcretail.provider.OrdenDB;
 import com.example.idcretail.provider.PerfilDB;
 import com.example.idcretail.provider.TipoActivoDB;
 import com.example.idcretail.provider.repository.CarteraRepository;
 import com.example.idcretail.provider.repository.ClienteRepository;
 import com.example.idcretail.provider.repository.EspecieRepository;
+import com.example.idcretail.provider.repository.OrdenRepository;
 import com.example.idcretail.provider.repository.PerfilRepository;
 import com.example.idcretail.provider.repository.TipoActivoRepository;
 
@@ -46,6 +50,9 @@ public class IdcRetailCoreConfiguration {
 	
 	@Autowired
 	CarteraRepository carteraRepository;
+	
+	@Autowired
+	OrdenRepository ordenRepository;
 	
 	@Bean
 	public ClienteService clienteService() {
@@ -70,6 +77,11 @@ public class IdcRetailCoreConfiguration {
 	@Bean
 	public CarteraService carteraService() {
 		return new DefaultCarteraService(new CarteraDB(carteraRepository));
+	}
+	
+	@Bean
+	public OrdenService ordenService() {
+		return new DefaultOrdenService(new OrdenDB(ordenRepository));
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.example.idcretail.core.orden;
 
+import com.example.idcretail.core.cartera.Cartera;
 import com.example.idcretail.core.especie.Especie;
 
 public class Orden {
@@ -9,6 +10,8 @@ public class Orden {
 	private Especie especie;
 	
 	private TipoOrden tipoOrden;
+	
+	private Cartera cartera;
 	
 	private String estado;
 	
@@ -52,5 +55,13 @@ public class Orden {
 
 	public void setTipoOperacion(String tipoOperacion) {
 		this.tipoOperacion = tipoOperacion;
+	}
+
+	public Cartera getCartera() {
+		return cartera;
+	}
+
+	public void setCartera(Cartera cartera) {
+		this.cartera = cartera;
 	}
 }

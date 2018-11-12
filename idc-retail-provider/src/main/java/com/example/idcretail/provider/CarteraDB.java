@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.idcretail.core.ResourceNotFoundException;
+import com.example.idcretail.core.cartera.Cartera;
 import com.example.idcretail.core.cartera.CarteraGateway;
 import com.example.idcretail.core.cartera.DetailedCartera;
+import com.example.idcretail.core.cliente.Cliente;
 import com.example.idcretail.provider.entity.CarteraEntity;
 import com.example.idcretail.provider.entity.ClienteEntity;
 import com.example.idcretail.provider.entity.OrdenEntity;
@@ -24,7 +26,7 @@ public class CarteraDB implements CarteraGateway {
 	public DetailedCartera findCarteraByCliente(Long clienteId) {
 		Optional<CarteraEntity> cartera = carteraRepository.findByClienteClienteId(clienteId);
 		
-		return cartera.map(this::convertEntityToDomain)
+		return cartera.map(this::convertEntityToDomainDetailed)
 				.orElseThrow(() -> new ResourceNotFoundException("Client Not Found"));
 	}
 	
@@ -32,11 +34,11 @@ public class CarteraDB implements CarteraGateway {
 	public DetailedCartera findCarteraByClienteAndPerfil(Long clienteId, Long perfilId) {
 		Optional<CarteraEntity> cartera = carteraRepository.findByClienteAndPerfil(clienteId, perfilId);
 		
-		return cartera.map(this::convertEntityToDomain)
+		return cartera.map(this::convertEntityToDomainDetailed)
 			.orElseThrow(() -> new ResourceNotFoundException("Client and Perfil Not Found"));
 	}
 	
-	private DetailedCartera convertEntityToDomain(CarteraEntity entity) {
+	private DetailedCartera convertEntityToDomainDetailed(CarteraEntity entity) {
 		ClienteEntity cliente = entity.getCliente();
 		
 		DetailedCartera cartera = new DetailedCartera();
@@ -49,6 +51,18 @@ public class CarteraDB implements CarteraGateway {
 		cartera.setOrdenes(ordenes.stream()
 			.map(Utils::convertOrdenToDomain)
 			.collect(Collectors.toList()));
+		
+		return cartera;
+	}
+	
+	static Cartera convertEntityToDomain(CarteraEntity entity) {
+		ClienteEntity cliente = entity.getCliente();
+		
+		Cartera cartera = new Cartera();
+		cartera.setCarteraId(entity.getCarteraId());
+		cartera.setNombreCartera(entity.getNombre());
+		cartera.setClienteId(cliente.getClienteId());
+		cartera.setCuitCuil(cliente.getCuitCuil());
 		
 		return cartera;
 	}
